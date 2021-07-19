@@ -6,13 +6,13 @@ const ts = require('gulp-typescript')
 const tsProj = ts.createProject('tsconfig.json')
 
 const paths = {
-    input : {
-        sass : 'Styles/main.scss',
-        ts : 'Scripts/**/*.ts'
+    input: {
+        sass: 'Styles/main.scss',
+        ts: 'Scripts/**/*.ts'
     },
-    output : {
-        css : './wwwroot/css',
-        js : './wwwroot/js'
+    output: {
+        css: './wwwroot/css',
+        js: './wwwroot/js'
     }
 }
 
@@ -23,7 +23,9 @@ gulp.task('sass', () => {
 });
 
 gulp.task('watch-sass', () => {
-    return gulp.watch(paths.input.sass, ['sass'])
+    return gulp.watch(paths.input.sass, (done) => {
+        gulp.series(['clean', 'sass'])(done);
+    });
 });
 
 gulp.task('typescript', () => {
@@ -34,7 +36,9 @@ gulp.task('typescript', () => {
 });
 
 gulp.task('watch-typescript', () => {
-    return gulp.watch(paths.input.ts, ['typescript'])
+    return gulp.watch(paths.input.ts, (done) => {
+        gulp.series(['clean', 'typescript'])(done);
+    });
 });
 
 gulp.task('clean', () => {
